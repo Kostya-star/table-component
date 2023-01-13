@@ -1,33 +1,82 @@
 import mock_data from 'api/Mock_data.json';
 import 'components/table.scss';
-import { memo, useMemo } from 'react';
-import { useSortBy, useTable } from 'react-table';
-import { COLUMNS } from './columns';
+import { useMemo, useState } from 'react';
+import { useGlobalFilter, useSortBy, useTable } from 'react-table';
+import { ISelectOption } from 'types';
+import { InputFilter } from './InputFilter/InputSearch';
+import { InputSelect } from './InputSelect/InputSelect';
+
+
+const optionsMulti = [
+  { value: 'date', label: 'Date' },
+  { value: 'number', label: 'Number' },
+  { value: 'string', label: 'String' },
+];
+
 
 export const Table = () => {
+  const [sortBy, setSortBy] = useState<ISelectOption[]>();
+    
+  const data = useMemo(() => mock_data, []);
+  const columns = useMemo(() => [
+    {
+      Header: 'Date',
+      accessor: 'item_date' as const,
+      disableGlobalFilter: sortBy?.length && !sortBy?.find(val => val.value === 'date'),
+    },
+    {
+      Header: 'Number',
+      accessor: 'item_number' as const,
+      disableGlobalFilter: sortBy?.length && !sortBy?.find(val => val.value === 'number'),
+    },
+    {
+      Header: 'String',
+      accessor: 'item_string' as const,
+      disableGlobalFilter: sortBy?.length && !sortBy?.find(val => val.value === 'string'),
+    },
+  ], [sortBy]);
 
-    const columns = useMemo(() => COLUMNS, []);
-    const data = useMemo(() => mock_data, []);
-  
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
-      {
-        columns,
-        data,
-      },
-      useSortBy
-    );
-  
-    return (
+  const {
+    headerGroups,
+    rows,
+    state,
+    setGlobalFilter,
+    getTableProps,
+    getTableBodyProps,
+    prepareRow,
+  } = useTable(
+    {
+      // @ts-expect-error
+      columns,
+      data,
+    },
+    useGlobalFilter,
+    useSortBy
+  );
+
+  const { globalFilter } = state;
+
+  return (
+    <div className="container">
+      <div className="header__group">
+        <InputSelect
+          // value={sortBy?.find(val => val.value ===)}
+          onChangeMulti={setSortBy}
+          isMulti={true}
+          name="multiSelect"
+          label="Сортировать по: "
+          options={optionsMulti}
+        />
+        <InputFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      </div>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, ind) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
               {headerGroup.headers.map((column, ind) => (
-                <th {...column.getHeaderProps(column?.getSortByToggleProps())} key={ind}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
                   {column.render('Header')}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
-                  </span>
+                  <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}</span>
                 </th>
               ))}
             </tr>
@@ -50,6 +99,6 @@ export const Table = () => {
           })}
         </tbody>
       </table>
-    );
-  }
-
+    </div>
+  );
+};
