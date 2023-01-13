@@ -1,17 +1,14 @@
-import { HeaderGroup, Row } from 'react-table';
 import { FC } from 'react';
+import { HeaderGroup, Row } from 'react-table';
+import { ITableRow } from 'types';
 import s from './Table.module.scss';
 
 interface ITableProps {
   getTableProps: () => void;
-  headerGroups: Array<
-    HeaderGroup<{ id: number; item_date: string; item_number: number; item_string: string }>
-  >;
+  headerGroups: Array<HeaderGroup<ITableRow>>;
   getTableBodyProps: () => void;
-  page: Array<Row<{ id: number; item_date: string; item_number: number; item_string: string }>>;
-  prepareRow: (
-    row: Row<{ id: number; item_date: string; item_number: number; item_string: string }>
-  ) => void;
+  page: Array<Row<ITableRow>>;
+  prepareRow: (row: Row<ITableRow>) => void;
 }
 
 export const Table: FC<ITableProps> = ({

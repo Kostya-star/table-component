@@ -1,13 +1,13 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
-import s from './InputFilter.module.scss';
+import s from './InputSearch.module.scss';
 
 interface InputFilterProps {
   filter: string;
   setFilter: (val: string) => void;
 }
 
-export const InputFilter: FC<InputFilterProps> = ({ filter, setFilter }) => {
+export const InputSearch: FC<InputFilterProps> = ({ filter, setFilter }) => {
   const [value, setValue] = useState(filter);
 
   const onChange = useAsyncDebounce((value: string) => {

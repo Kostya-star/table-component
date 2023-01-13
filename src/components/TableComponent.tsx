@@ -3,9 +3,9 @@ import { useMemo, useState } from 'react';
 import { useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table';
 import 'scss/all.scss';
 import { ISelectOption } from 'types';
-import { InputFilter } from './InputFilter/InputSearch';
+import { InputSearch } from './InputSearch/InputSearch';
 import { InputSelect } from './InputSelect/InputSelect';
-import { Paginations } from './Pagination/Paginations';
+import { Pagination } from './Pagination/Pagination';
 import { Table } from './Table/Table';
 
 const optionsMulti = [
@@ -13,6 +13,7 @@ const optionsMulti = [
   { value: 'number', label: 'Number' },
   { value: 'string', label: 'String' },
 ];
+
 
 export const TableComponent = () => {
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
@@ -46,6 +47,9 @@ export const TableComponent = () => {
     page,
     canNextPage,
     canPreviousPage,
+    pageCount,
+    pageOptions,
+    gotoPage,
     nextPage,
     previousPage,
     setGlobalFilter,
@@ -63,7 +67,8 @@ export const TableComponent = () => {
     usePagination
   );
 
-  const { globalFilter } = state;
+  const { globalFilter, pageIndex } = state;
+  
 
   return (
     <div className="container">
@@ -75,7 +80,7 @@ export const TableComponent = () => {
           label="Сортировать по: "
           options={optionsMulti}
         />
-        <InputFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
       <Table
         getTableProps={getTableProps}
@@ -84,7 +89,17 @@ export const TableComponent = () => {
         page={page}
         prepareRow={prepareRow}
       />
-      <Paginations goBack={previousPage} goNext={nextPage} canPreviousPage={canPreviousPage} canNextPage={canNextPage}/>
+      <Pagination
+        goBack={previousPage}
+        goNext={nextPage}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        pageIndex={pageIndex}
+        pageOptions={pageOptions}
+        gotoPage={gotoPage}
+        pageCount={pageCount}
+        rows={rows}
+      />
     </div>
   );
 };

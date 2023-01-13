@@ -1,10 +1,23 @@
 .pagination {
   display: flex;
   justify-content: end;
+  align-items: center;
+  span {
+    font-size: 20px;
+    input {
+      appearance: none;
+      width: 50px;
+    }
+  }
+
   button {
     appearance: none;
     border: none;
     background-color: transparent;
     cursor: pointer;
+    font-size: 30px;
+  }
+  &_hidden {
+    display: none;
   }
 }
