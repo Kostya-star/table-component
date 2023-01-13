@@ -1,0 +1,10 @@
+.pagination {
+  display: flex;
+  justify-content: end;
+  button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}

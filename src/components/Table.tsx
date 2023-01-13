@@ -1,10 +1,11 @@
 import mock_data from 'api/Mock_data.json';
 import 'components/table.scss';
 import { useMemo, useState } from 'react';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
+import { useGlobalFilter, useSortBy, usePagination, useTable } from 'react-table';
 import { ISelectOption } from 'types';
 import { InputFilter } from './InputFilter/InputSearch';
 import { InputSelect } from './InputSelect/InputSelect';
+import { Paginations } from './Pagination/Paginations';
 
 
 const optionsMulti = [
@@ -40,6 +41,9 @@ export const Table = () => {
     headerGroups,
     rows,
     state,
+    page,
+    nextPage,
+    previousPage,
     setGlobalFilter,
     getTableProps,
     getTableBodyProps,
@@ -51,7 +55,8 @@ export const Table = () => {
       data,
     },
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
   const { globalFilter } = state;
@@ -83,7 +88,7 @@ export const Table = () => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, ind) => {
+          {page.map((row, ind) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()} key={ind}>
@@ -99,6 +104,7 @@ export const Table = () => {
           })}
         </tbody>
       </table>
+      <Paginations goBack={previousPage} goNext={nextPage}/>
     </div>
   );
 };
