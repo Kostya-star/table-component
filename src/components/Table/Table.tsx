@@ -19,14 +19,14 @@ export const Table: FC<ITableProps> = ({
   prepareRow,
 }) => {
   return (
-    <table {...getTableProps} className={s}>
+    <table {...getTableProps} className={s.table}>
       <thead>
         {headerGroups.map((headerGroup, ind) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
             {headerGroup.headers.map((column, ind) => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
                 {column.render('Header')}
-                <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}</span>
+                <span className={s.table__header__emoji}>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}</span>
               </th>
             ))}
           </tr>
