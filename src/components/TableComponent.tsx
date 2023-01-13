@@ -44,6 +44,8 @@ export const TableComponent = () => {
     rows,
     state,
     page,
+    canNextPage,
+    canPreviousPage,
     nextPage,
     previousPage,
     setGlobalFilter,
@@ -82,7 +84,7 @@ export const TableComponent = () => {
         page={page}
         prepareRow={prepareRow}
       />
-      <Paginations goBack={previousPage} goNext={nextPage} />
+      <Paginations goBack={previousPage} goNext={nextPage} canPreviousPage={canPreviousPage} canNextPage={canNextPage}/>
     </div>
   );
 };
