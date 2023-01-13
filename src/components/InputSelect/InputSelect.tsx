@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import { ISelectOption } from 'types';
 import s from './InputSelect.module.scss';
@@ -7,12 +7,18 @@ interface InputSelectProps {
   isMulti: boolean;
   name: string;
   label: string;
-  options: ISelectOption[]
+  options: ISelectOption[];
   onChangeMulti: (val: ISelectOption[]) => void;
 }
 
-
-export const InputSelect: FC<InputSelectProps> = ({ isMulti, name, label, options, onChangeMulti }) => {
+export const InputSelect: FC<InputSelectProps> = ({
+  isMulti,
+  name,
+  label,
+  options,
+  onChangeMulti,
+}) => {
+  const [optionSelected, setOptionSelected] = useState([]);
   const IsMulti = isMulti;
 
   const classNames: StylesConfig<ISelectOption | ISelectOption[], typeof IsMulti> = {
@@ -94,6 +100,7 @@ export const InputSelect: FC<InputSelectProps> = ({ isMulti, name, label, option
   const setOnChange = (option: any) => {
     if (option) {
       onChangeMulti(option);
+      setOptionSelected(option);
 
       // onChangeMulti(option);
       // onChange(option.value, name);
@@ -116,6 +123,7 @@ export const InputSelect: FC<InputSelectProps> = ({ isMulti, name, label, option
         isSearchable={false}
         hideSelectedOptions={false}
         closeMenuOnSelect={!IsMulti}
+        isLoading={!optionSelected.length}
         onChange={setOnChange}
       />
     </div>
