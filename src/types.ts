@@ -4,8 +4,10 @@ export interface ISelectOption {
 }
 
 export interface ITableRow {
-  id: number;
-  item_date: string;
-  item_number: number;
-  item_string: string;
+  id: number
+  item_avatar: string
+  item_date: string
+  item_number: number
+  item_string: string
+  item_email: string
 }
