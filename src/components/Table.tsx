@@ -1,5 +1,4 @@
-import mock_data from 'api/Mock_data.json';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   Column,
   Row,
@@ -16,6 +15,8 @@ import { InputSearch } from './InputSearch/InputSearch';
 import { InputSelect } from './InputSelect/InputSelect';
 import { Pagination } from './Pagination/Pagination';
 import { TableBlock } from './TableBlock/TableBlock';
+import axios from 'axios';
+import { baseUrl } from './../api/baseUrl';
 
 const optionsMulti = [
   { value: 'date', label: 'Date' },
@@ -29,9 +30,39 @@ const optionsPageSize = [
 ];
 
 export const Table = () => {
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
 
-  const data = useMemo(() => mock_data, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      void fetch(`${baseUrl}table`).then(async (response) => {
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await response.json() : null;
+
+        if (response.ok) {
+          setUsers(data);
+          setIsLoading(false);
+        } else {
+          setServerError('Server error');
+          setIsLoading(false);
+          // const error = data?.message || response.status;
+          // return await Promise.reject(error);
+        }
+      });
+      // .catch((error) => {
+      //   console.error('There was an error!', error);
+      //   setIsLoading(false);
+      //   return setServerError('Server error');
+      // });
+    };
+    void fetchData();
+  }, []);
+
+  const data = useMemo(() => users, [users]);
   const columns = useMemo(
     () => [
       {
@@ -97,45 +128,52 @@ export const Table = () => {
 
   return (
     <div className="container">
-      <div className="table__header">
-        <InputSelect
-          onChangeSingle={(e) => setPageSize(e.value as number)}
-          isMulti={false}
-          name="pageSizeSelect"
-          label="Показывать страниц: "
-          options={optionsPageSize}
-          value={pageSizeSelectVal}
-        />
-        <div className="table__header__group">
-          <InputSelect
-            onChangeMulti={setSortBy}
-            isMulti={true}
-            name="sortByColumnsSelect"
-            label="Сортировать по: "
-            options={optionsMulti}
+      {!users.length ? (
+        (isLoading && <div className="table__loading">Loading, plase wait!</div>) ||
+        (serverError && <div className="table__loading">{serverError}</div>)
+      ) : (
+        <>
+          <div className="table__header">
+            <InputSelect
+              onChangeSingle={(e) => setPageSize(e.value as number)}
+              isMulti={false}
+              name="pageSizeSelect"
+              label="Показывать страниц: "
+              options={optionsPageSize}
+              value={pageSizeSelectVal}
+            />
+            <div className="table__header__group">
+              <InputSelect
+                onChangeMulti={setSortBy}
+                isMulti={true}
+                name="sortByColumnsSelect"
+                label="Сортировать по: "
+                options={optionsMulti}
+              />
+              <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
+            </div>
+          </div>
+          <TableBlock
+            getTableProps={getTableProps}
+            headerGroups={headerGroups}
+            getTableBodyProps={getTableBodyProps}
+            page={page}
+            prepareRow={prepareRow}
+            visibleColumns={visibleColumns}
           />
-          <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
-        </div>
-      </div>
-      <TableBlock
-        getTableProps={getTableProps}
-        headerGroups={headerGroups}
-        getTableBodyProps={getTableBodyProps}
-        page={page}
-        prepareRow={prepareRow}
-        visibleColumns={visibleColumns}
-      />
-      <Pagination
-        goBack={previousPage}
-        goNext={nextPage}
-        canPreviousPage={canPreviousPage}
-        canNextPage={canNextPage}
-        pageIndex={pageIndex}
-        pageOptions={pageOptions}
-        gotoPage={gotoPage}
-        pageCount={pageCount}
-        rows={rows}
-      />
+          <Pagination
+            goBack={previousPage}
+            goNext={nextPage}
+            canPreviousPage={canPreviousPage}
+            canNextPage={canNextPage}
+            pageIndex={pageIndex}
+            pageOptions={pageOptions}
+            gotoPage={gotoPage}
+            pageCount={pageCount}
+            rows={rows}
+          />
+        </>
+      )}
     </div>
   );
 };
