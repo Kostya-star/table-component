@@ -67,9 +67,9 @@ export const Table = () => {
     () => [
       {
         id: 'extandable',
-        Cell: ({row} : any) => (
+        Cell: ({ row }: any) => (
           <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>
-        )
+        ),
       },
       {
         Header: 'Date of birth',
@@ -110,7 +110,7 @@ export const Table = () => {
     getTableProps,
     getTableBodyProps,
     prepareRow,
-    getToggleHideAllColumnsProps
+    getToggleHideAllColumnsProps,
   } = useTable(
     {
       columns: columns as Array<Column<ITableRow>>,
@@ -128,10 +128,20 @@ export const Table = () => {
   const { globalFilter, pageIndex, pageSize } = state;
 
   const pageSizeSelectVal = optionsPageSize.find((obj) => obj.value === pageSize);
-console.log(allColumns);
+  console.log(allColumns);
 
   return (
     <div className="container">
+      <div>
+        {allColumns.map((column) => (
+          <div key={column.id}>
+            <label>
+              <input type="checkbox" onClick={() => column.} />
+              {column.Header}
+            </label>
+          </div>
+        ))}
+      </div>
       {!users.length ? (
         (isLoading && <div className="table__loading">Loading, plase wait!</div>) ||
         (serverError && <div className="table__loading">{serverError}</div>)
