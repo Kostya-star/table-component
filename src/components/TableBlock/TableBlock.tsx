@@ -1,8 +1,8 @@
-import { FC, Fragment } from 'react'
-import { ColumnInstance, HeaderGroup, Row } from 'react-table'
-import { ITableRow } from 'types'
-import s from './TableBlock.module.scss'
-import { TableRowDetails } from './TableRowDetails/TableRowDetails'
+import { FC, Fragment } from 'react';
+import { ColumnInstance, HeaderGroup, Row } from 'react-table';
+import { ITableRow } from 'types';
+import s from './TableBlock.module.scss';
+import { TableRowDetails } from './TableRowDetails/TableRowDetails';
 
 interface ITableBlockProps {
   headerGroups: Array<HeaderGroup<ITableRow>>;
@@ -29,9 +29,11 @@ export const TableBlock: FC<ITableBlockProps> = ({
             {headerGroup.headers.map((column, ind) => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
                 {column.render('Header')}
-                <span className={s.table__header__emoji}>
-                  {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
-                </span>
+                {column.id === 'extandable' ? null : (
+                  <span className={s.table__header__emoji}>
+                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
+                  </span>
+                )}
               </th>
             ))}
           </tr>

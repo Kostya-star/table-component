@@ -8,9 +8,14 @@
   &__header__emoji {
     font-size: 25px;
   }
+
   td {
     border: 1px solid #ddd;
     padding: 8px;
+
+    &:first-child {
+      text-align: center;
+    }
   }
 
   th {

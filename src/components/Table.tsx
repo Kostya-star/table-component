@@ -47,7 +47,7 @@ export const Table = () => {
           setUsers(data);
           setIsLoading(false);
         } else {
-          setServerError('Server error');
+          setServerError('oopppss! Some error occured!');
           setIsLoading(false);
           // const error = data?.message || response.status;
           // return await Promise.reject(error);
@@ -66,18 +66,16 @@ export const Table = () => {
   const columns = useMemo(
     () => [
       {
+        id: 'extandable',
+        Cell: ({row} : any) => (
+          <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>
+        )
+      },
+      {
         Header: 'Date of birth',
         accessor: 'item_date' as const,
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'date'),
         // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
-        Cell: ({ row }: any) => {
-          return (
-            <>
-              <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>{' '}
-              {row.values.item_date}
-            </>
-          );
-        },
       },
       {
         Header: 'Number in table',
@@ -98,6 +96,7 @@ export const Table = () => {
     rows,
     state,
     visibleColumns,
+    allColumns,
     page,
     canNextPage,
     canPreviousPage,
@@ -111,10 +110,14 @@ export const Table = () => {
     getTableProps,
     getTableBodyProps,
     prepareRow,
+    getToggleHideAllColumnsProps
   } = useTable(
     {
       columns: columns as Array<Column<ITableRow>>,
       data,
+      initialState: {
+        // hiddenColumns: ['item_date']
+      },
     },
     useGlobalFilter,
     useSortBy,
@@ -125,6 +128,7 @@ export const Table = () => {
   const { globalFilter, pageIndex, pageSize } = state;
 
   const pageSizeSelectVal = optionsPageSize.find((obj) => obj.value === pageSize);
+console.log(allColumns);
 
   return (
     <div className="container">
