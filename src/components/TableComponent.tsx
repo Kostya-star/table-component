@@ -20,8 +20,6 @@ const optionsPageSize = [
   { value: 50, label: 50 },
 ];
 
-const pageSizeDefaultVal = optionsPageSize.find((obj) => obj.value === 10);
-
 
 export const TableComponent = () => {
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
@@ -58,16 +56,18 @@ export const TableComponent = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
+  const pageSizeSelectVal = optionsPageSize.find((obj) => obj.value === pageSize)
+
   return (
     <div className="container">
       <div className="table__header">
         <InputSelect
-          onChangeSingle={(e) => setPageSize(Number(e.value))}
+          onChangeSingle={(e) => setPageSize(e.value as number)}
           isMulti={false}
           name="pageSizeSelect"
           label="Показывать страниц: "
           options={optionsPageSize}
-          pageSizeDefaultVal={pageSizeDefaultVal}
+          value={pageSizeSelectVal}
         />
       <div className="table__header__group">
         <InputSelect

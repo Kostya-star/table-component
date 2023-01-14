@@ -8,7 +8,8 @@ interface InputSelectProps {
   name: string;
   label: string;
   options: ISelectOption[];
-  pageSizeDefaultVal?: ISelectOption
+  // pageSizeDefaultVal?: ISelectOption;
+  value?: ISelectOption;
   onChangeSingle?: (val: ISelectOption) => void;
   onChangeMulti?: (val: ISelectOption[]) => void;
 }
@@ -18,11 +19,10 @@ export const InputSelect: FC<InputSelectProps> = ({
   name,
   label,
   options,
-  pageSizeDefaultVal,
+  value,
   onChangeSingle,
   onChangeMulti,
 }) => {
-  const [optionSelected, setOptionSelected] = useState<ISelectOption[] | ISelectOption>();
   const IsMulti = isMulti;
 
   const classNames: StylesConfig<ISelectOption | ISelectOption[], typeof IsMulti> = {
@@ -101,15 +101,11 @@ export const InputSelect: FC<InputSelectProps> = ({
     if (option) {
       if (IsMulti && onChangeMulti) {
         onChangeMulti(option);
-        setOptionSelected(option);
       } else if (onChangeSingle) {
         onChangeSingle(option);
-        setOptionSelected(option);
       }
     }
   };
-
-
 
   return (
     <div className={s.select}>
@@ -118,7 +114,8 @@ export const InputSelect: FC<InputSelectProps> = ({
         options={options}
         styles={classNames}
         name={name}
-        defaultValue={pageSizeDefaultVal}
+        // defaultValue={pageSizeDefaultVal}
+        value={value}
         isMulti={IsMulti}
         isSearchable={false}
         hideSelectedOptions={false}
