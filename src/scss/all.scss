@@ -10,8 +10,16 @@
   margin-top: 20px;
 }
 
-.header__group {
-  display: flex;
-  align-items: center;
-  justify-content: end;
+.table {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__group {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+    }
+  }
 }
+

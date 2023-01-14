@@ -1,8 +1,9 @@
 import mock_data from 'api/Mock_data.json';
 import { useMemo, useState } from 'react';
-import { useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table';
+import { Column, useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table';
 import 'scss/all.scss';
-import { ISelectOption } from 'types';
+import { ISelectOption, ITableRow } from 'types';
+import { columnsTable } from './columnsTable';
 import { InputSearch } from './InputSearch/InputSearch';
 import { InputSelect } from './InputSelect/InputSelect';
 import { Pagination } from './Pagination/Pagination';
@@ -13,32 +14,20 @@ const optionsMulti = [
   { value: 'number', label: 'Number' },
   { value: 'string', label: 'String' },
 ];
+const optionsPageSize = [
+  { value: 10, label: 10 },
+  { value: 25, label: 25 },
+  { value: 50, label: 50 },
+];
+
+const pageSizeDefaultVal = optionsPageSize.find((obj) => obj.value === 10);
 
 
 export const TableComponent = () => {
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
 
   const data = useMemo(() => mock_data, []);
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Date',
-        accessor: 'item_date' as const,
-        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'date'),
-      },
-      {
-        Header: 'Number',
-        accessor: 'item_number' as const,
-        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'number'),
-      },
-      {
-        Header: 'String',
-        accessor: 'item_string' as const,
-        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'string'),
-      },
-    ],
-    [sortBy]
-  );
+  const columns = useMemo(() => columnsTable(sortBy), [sortBy]);
 
   const {
     headerGroups,
@@ -49,6 +38,7 @@ export const TableComponent = () => {
     canPreviousPage,
     pageCount,
     pageOptions,
+    setPageSize,
     gotoPage,
     nextPage,
     previousPage,
@@ -58,8 +48,7 @@ export const TableComponent = () => {
     prepareRow,
   } = useTable(
     {
-      // @ts-expect-error
-      columns,
+      columns: columns as Array<Column<ITableRow>>,
       data,
     },
     useGlobalFilter,
@@ -67,20 +56,29 @@ export const TableComponent = () => {
     usePagination
   );
 
-  const { globalFilter, pageIndex } = state;
-  
+  const { globalFilter, pageIndex, pageSize } = state;
 
   return (
     <div className="container">
-      <div className="header__group">
+      <div className="table__header">
+        <InputSelect
+          onChangeSingle={(e) => setPageSize(Number(e.value))}
+          isMulti={false}
+          name="pageSizeSelect"
+          label="Показывать страниц: "
+          options={optionsPageSize}
+          pageSizeDefaultVal={pageSizeDefaultVal}
+        />
+      <div className="table__header__group">
         <InputSelect
           onChangeMulti={setSortBy}
           isMulti={true}
-          name="multiSelect"
+          name="sortByColumnsSelect"
           label="Сортировать по: "
           options={optionsMulti}
         />
         <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
+      </div>
       </div>
       <Table
         getTableProps={getTableProps}

@@ -8,7 +8,9 @@ interface InputSelectProps {
   name: string;
   label: string;
   options: ISelectOption[];
-  onChangeMulti: (val: ISelectOption[]) => void;
+  pageSizeDefaultVal?: ISelectOption
+  onChangeSingle?: (val: ISelectOption) => void;
+  onChangeMulti?: (val: ISelectOption[]) => void;
 }
 
 export const InputSelect: FC<InputSelectProps> = ({
@@ -16,9 +18,11 @@ export const InputSelect: FC<InputSelectProps> = ({
   name,
   label,
   options,
+  pageSizeDefaultVal,
+  onChangeSingle,
   onChangeMulti,
 }) => {
-  const [optionSelected, setOptionSelected] = useState([]);
+  const [optionSelected, setOptionSelected] = useState<ISelectOption[] | ISelectOption>();
   const IsMulti = isMulti;
 
   const classNames: StylesConfig<ISelectOption | ISelectOption[], typeof IsMulti> = {
@@ -26,11 +30,9 @@ export const InputSelect: FC<InputSelectProps> = ({
       ...baseStyles,
       color: '#707070',
       height: '40px',
-      backgroundColor: IsMulti || name === 'pagination_select' ? 'white' : '#F6F6F6',
-      // border: border ? '0.5px solid #D1D1D1' : 'none',
+      backgroundColor: '#F6F6F6',
       fontSize: '14px',
       fontWeight: '500',
-      // border: 0,
       boxShadow: 'none',
       transition: '0.2s',
       '&:hover': {
@@ -95,22 +97,19 @@ export const InputSelect: FC<InputSelectProps> = ({
     }),
   };
 
-  // const setOnChange = (option: ISelectOption | null) => {
-
   const setOnChange = (option: any) => {
     if (option) {
-      onChangeMulti(option);
-      setOptionSelected(option);
-
-      // onChangeMulti(option);
-      // onChange(option.value, name);
-      // if (IsMulti && onChangeMulti) {
-      //   onChangeMulti?.(option);
-      // } else if (onChange) {
-      //   onChange?.(option.value, name);
-      // }
+      if (IsMulti && onChangeMulti) {
+        onChangeMulti(option);
+        setOptionSelected(option);
+      } else if (onChangeSingle) {
+        onChangeSingle(option);
+        setOptionSelected(option);
+      }
     }
   };
+
+
 
   return (
     <div className={s.select}>
@@ -119,11 +118,11 @@ export const InputSelect: FC<InputSelectProps> = ({
         options={options}
         styles={classNames}
         name={name}
+        defaultValue={pageSizeDefaultVal}
         isMulti={IsMulti}
         isSearchable={false}
         hideSelectedOptions={false}
         closeMenuOnSelect={!IsMulti}
-        isLoading={!optionSelected.length}
         onChange={setOnChange}
       />
     </div>
