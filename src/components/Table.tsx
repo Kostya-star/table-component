@@ -15,7 +15,7 @@ import { ISelectOption, ITableRow } from 'types';
 import { InputSearch } from './InputSearch/InputSearch';
 import { InputSelect } from './InputSelect/InputSelect';
 import { Pagination } from './Pagination/Pagination';
-import { Table } from './Table/Table';
+import { TableBlock } from './TableBlock/TableBlock';
 
 const optionsMulti = [
   { value: 'date', label: 'Date' },
@@ -28,7 +28,7 @@ const optionsPageSize = [
   { value: 50, label: 50 },
 ];
 
-export const TableComponent = () => {
+export const Table = () => {
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
 
   const data = useMemo(() => mock_data, []);
@@ -117,7 +117,7 @@ export const TableComponent = () => {
           <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
         </div>
       </div>
-      <Table
+      <TableBlock
         getTableProps={getTableProps}
         headerGroups={headerGroups}
         getTableBodyProps={getTableBodyProps}

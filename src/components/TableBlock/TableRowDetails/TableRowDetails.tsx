@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { Row } from 'react-table';
 import { ITableRow } from 'types';
-import s from './TableSubRow.module.scss';
+import s from './TableRowDetails.module.scss';
 
-interface ITableSubRowProps {
+interface ITableRowDetailsProps {
   rowData: Row<ITableRow>;
 }
 
-export const TableSubRow: FC<ITableSubRowProps> = ({ rowData }) => {
+export const TableRowDetails: FC<ITableRowDetailsProps> = ({ rowData }) => {
   const {
     id,
     item_avatar: avatar,
@@ -18,7 +18,7 @@ export const TableSubRow: FC<ITableSubRowProps> = ({ rowData }) => {
   } = rowData.original;
 
   return (
-    <table className={s.subTable}>
+    <table className={s.tableRow_details}>
       <tbody>
         <tr>
           <td>

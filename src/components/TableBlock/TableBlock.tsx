@@ -1,10 +1,10 @@
-import { FC, Fragment } from 'react';
-import { ColumnInstance, HeaderGroup, Row } from 'react-table';
-import { ITableRow } from 'types';
-import s from './Table.module.scss';
-import { TableSubRow } from './TableSubRow/TableSubRow';
+import { FC, Fragment } from 'react'
+import { ColumnInstance, HeaderGroup, Row } from 'react-table'
+import { ITableRow } from 'types'
+import s from './TableBlock.module.scss'
+import { TableRowDetails } from './TableRowDetails/TableRowDetails'
 
-interface ITableProps {
+interface ITableBlockProps {
   headerGroups: Array<HeaderGroup<ITableRow>>;
   page: Array<Row<ITableRow>>;
   visibleColumns: Array<ColumnInstance<ITableRow>>;
@@ -13,7 +13,7 @@ interface ITableProps {
   prepareRow: (row: Row<ITableRow>) => void;
 }
 
-export const Table: FC<ITableProps> = ({
+export const TableBlock: FC<ITableBlockProps> = ({
   headerGroups,
   page,
   visibleColumns,
@@ -54,7 +54,7 @@ export const Table: FC<ITableProps> = ({
               {row.isExpanded ? (
                 <tr>
                   <td colSpan={visibleColumns.length} style={{ backgroundColor: '#ddd' }}>
-                    <TableSubRow rowData={row} />
+                    <TableRowDetails rowData={row} />
                   </td>
                 </tr>
               ) : null}
