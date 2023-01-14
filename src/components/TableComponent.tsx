@@ -1,9 +1,17 @@
 import mock_data from 'api/Mock_data.json';
 import { useMemo, useState } from 'react';
-import { Column, useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table';
+import {
+  Column,
+  Row,
+  useExpanded,
+  UseExpandedRowProps,
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable,
+} from 'react-table';
 import 'scss/all.scss';
 import { ISelectOption, ITableRow } from 'types';
-import { columnsTable } from './columnsTable';
 import { InputSearch } from './InputSearch/InputSearch';
 import { InputSelect } from './InputSelect/InputSelect';
 import { Pagination } from './Pagination/Pagination';
@@ -20,17 +28,45 @@ const optionsPageSize = [
   { value: 50, label: 50 },
 ];
 
-
 export const TableComponent = () => {
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
 
   const data = useMemo(() => mock_data, []);
-  const columns = useMemo(() => columnsTable(sortBy), [sortBy]);
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Date of birth',
+        accessor: 'item_date' as const,
+        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'date'),
+        // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
+        Cell: ({ row }: any) => {
+          return (
+            <>
+              <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>{' '}
+              {row.values.item_date}
+            </>
+          );
+        },
+      },
+      {
+        Header: 'Number in table',
+        accessor: 'item_number' as const,
+        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'number'),
+      },
+      {
+        Header: 'Name',
+        accessor: 'item_string' as const,
+        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'string'),
+      },
+    ],
+    [sortBy]
+  );
 
   const {
     headerGroups,
     rows,
     state,
+    visibleColumns,
     page,
     canNextPage,
     canPreviousPage,
@@ -51,12 +87,13 @@ export const TableComponent = () => {
     },
     useGlobalFilter,
     useSortBy,
+    useExpanded,
     usePagination
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
 
-  const pageSizeSelectVal = optionsPageSize.find((obj) => obj.value === pageSize)
+  const pageSizeSelectVal = optionsPageSize.find((obj) => obj.value === pageSize);
 
   return (
     <div className="container">
@@ -69,16 +106,16 @@ export const TableComponent = () => {
           options={optionsPageSize}
           value={pageSizeSelectVal}
         />
-      <div className="table__header__group">
-        <InputSelect
-          onChangeMulti={setSortBy}
-          isMulti={true}
-          name="sortByColumnsSelect"
-          label="Сортировать по: "
-          options={optionsMulti}
-        />
-        <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
-      </div>
+        <div className="table__header__group">
+          <InputSelect
+            onChangeMulti={setSortBy}
+            isMulti={true}
+            name="sortByColumnsSelect"
+            label="Сортировать по: "
+            options={optionsMulti}
+          />
+          <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
+        </div>
       </div>
       <Table
         getTableProps={getTableProps}
@@ -86,6 +123,7 @@ export const TableComponent = () => {
         getTableBodyProps={getTableBodyProps}
         page={page}
         prepareRow={prepareRow}
+        visibleColumns={visibleColumns}
       />
       <Pagination
         goBack={previousPage}

@@ -1,0 +1,31 @@
+.subTable {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(193, 176, 87);
+  
+  
+  tr {
+    display: inline-flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    &:hover {
+      background-color: rgb(193, 176, 87);
+    }
+
+    td {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      border: none;
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+}

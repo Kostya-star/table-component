@@ -1,21 +1,24 @@
-import { FC } from 'react';
-import { HeaderGroup, Row } from 'react-table';
+import { FC, Fragment } from 'react';
+import { ColumnInstance, HeaderGroup, Row } from 'react-table';
 import { ITableRow } from 'types';
 import s from './Table.module.scss';
+import { TableSubRow } from './TableSubRow/TableSubRow';
 
 interface ITableProps {
-  getTableProps: () => void;
   headerGroups: Array<HeaderGroup<ITableRow>>;
-  getTableBodyProps: () => void;
   page: Array<Row<ITableRow>>;
+  visibleColumns: Array<ColumnInstance<ITableRow>>;
+  getTableProps: () => void;
+  getTableBodyProps: () => void;
   prepareRow: (row: Row<ITableRow>) => void;
 }
 
 export const Table: FC<ITableProps> = ({
-  getTableProps,
   headerGroups,
-  getTableBodyProps,
   page,
+  visibleColumns,
+  getTableProps,
+  getTableBodyProps,
   prepareRow,
 }) => {
   return (
@@ -26,7 +29,9 @@ export const Table: FC<ITableProps> = ({
             {headerGroup.headers.map((column, ind) => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
                 {column.render('Header')}
-                <span className={s.table__header__emoji}>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}</span>
+                <span className={s.table__header__emoji}>
+                  {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
+                </span>
               </th>
             ))}
           </tr>
@@ -36,15 +41,24 @@ export const Table: FC<ITableProps> = ({
         {page.map((row, ind) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} key={ind}>
-              {row.cells.map((cell, ind) => {
-                return (
-                  <td {...cell.getCellProps()} key={ind}>
-                    {cell.render('Cell')}
+            <Fragment {...row.getRowProps} key={ind}>
+              <tr>
+                {row.cells.map((cell, ind) => {
+                  return (
+                    <td {...cell.getCellProps()} key={ind}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
+              </tr>
+              {row.isExpanded ? (
+                <tr>
+                  <td colSpan={visibleColumns.length} style={{ backgroundColor: '#ddd' }}>
+                    <TableSubRow rowData={row} />
                   </td>
-                );
-              })}
-            </tr>
+                </tr>
+              ) : null}
+            </Fragment>
           );
         })}
       </tbody>
