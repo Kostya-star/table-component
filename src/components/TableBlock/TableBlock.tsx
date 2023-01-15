@@ -26,16 +26,18 @@ export const TableBlock: FC<ITableBlockProps> = ({
       <thead>
         {headerGroups.map((headerGroup, ind) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
-            {headerGroup.headers.map((column, ind) => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
-                {column.render('Header')}
-                {column.id === 'extandable' ? null : (
-                  <span className={s.table__header__emoji}>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
-                  </span>
-                )}
-              </th>
-            ))}
+            {headerGroup.headers.map((column, ind) => {
+              return (
+                <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
+                  {column.render('Header')}
+                  {column.id === 'item_extend' ? null : (
+                    <span className={s.table__header__emoji}>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
+                    </span>
+                  )}
+                </th>
+              );
+            })}
           </tr>
         ))}
       </thead>

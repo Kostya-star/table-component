@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from 'react';
-import { Row } from 'react-table';
+import { HeaderGroup, Row } from 'react-table';
 import { ITableRow } from 'types';
 import s from './Pagination.module.scss';
 
@@ -10,6 +10,7 @@ interface IPaginationProps {
   pageOptions: number[];
   pageCount: number;
   rows: Array<Row<ITableRow>>;
+  headerGroups: Array<HeaderGroup<ITableRow>>;
   goBack: () => void;
   goNext: () => void;
   gotoPage: (p: number) => void;
@@ -22,6 +23,7 @@ export const Pagination: FC<IPaginationProps> = ({
   pageOptions,
   pageCount,
   rows,
+  headerGroups,
   gotoPage,
   goBack,
   goNext,
@@ -32,18 +34,14 @@ export const Pagination: FC<IPaginationProps> = ({
   };
 
   return (
-    <div className={`${s.pagination} ${!rows.length && s.pagination_hidden}`}>
+    <div
+      className={`${s.pagination} ${(!rows.length || !headerGroups.length) && s.pagination_hidden}`}
+    >
       <span>
         Page{' '}
         <strong>
-          {/* {pageIndex + 1} of {pageOptions.length} */}
-          <input
-            type="number"
-            // defaultValue={pageIndex + 1}
-            value={pageIndex + 1}
-            onChange={onChangePageHandler}
-          />{' '}
-          of {pageOptions.length}
+          <input type="number" value={pageIndex + 1} onChange={onChangePageHandler} /> of{' '}
+          {pageOptions.length}
         </strong>
       </span>
       <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>

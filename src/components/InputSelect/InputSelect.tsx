@@ -114,7 +114,6 @@ export const InputSelect: FC<InputSelectProps> = ({
         options={options}
         styles={classNames}
         name={name}
-        // defaultValue={pageSizeDefaultVal}
         value={value}
         isMulti={IsMulti}
         isSearchable={false}

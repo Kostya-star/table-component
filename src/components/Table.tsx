@@ -18,12 +18,16 @@ import { TableBlock } from './TableBlock/TableBlock';
 import axios from 'axios';
 import { baseUrl } from './../api/baseUrl';
 
-const optionsMulti = [
-  { value: 'date', label: 'Date' },
-  { value: 'number', label: 'Number' },
-  { value: 'string', label: 'String' },
+const tableColumns = [
+  { value: 'item_extend', label: 'Details' },
+  { value: 'item_date', label: 'Date of birth' },
+  { value: 'item_number', label: 'Number in table' },
+  { value: 'item_string', label: 'Name' },
 ];
-const optionsPageSize = [
+
+const sortColumnsOptions = tableColumns.filter((col) => col.value !== 'item_extend');
+
+const pageSizeOptions = [
   { value: 10, label: 10 },
   { value: 25, label: 25 },
   { value: 50, label: 50 },
@@ -34,6 +38,7 @@ export const Table = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
+  const [hiddenColumns, setHiddenColumns] = useState<ISelectOption[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,15 +54,8 @@ export const Table = () => {
         } else {
           setServerError('oopppss! Some error occured!');
           setIsLoading(false);
-          // const error = data?.message || response.status;
-          // return await Promise.reject(error);
         }
       });
-      // .catch((error) => {
-      //   console.error('There was an error!', error);
-      //   setIsLoading(false);
-      //   return setServerError('Server error');
-      // });
     };
     void fetchData();
   }, []);
@@ -66,37 +64,44 @@ export const Table = () => {
   const columns = useMemo(
     () => [
       {
-        id: 'extandable',
+        accessor: 'item_extend' as const,
         Cell: ({ row }: any) => (
           <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>
         ),
+        show: !hiddenColumns.find((col) => col.value === 'item_extend'),
       },
       {
+        // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
         Header: 'Date of birth',
         accessor: 'item_date' as const,
-        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'date'),
-        // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
+        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_date'),
+        show: !hiddenColumns.find((col) => col.value === 'item_date'),
       },
       {
         Header: 'Number in table',
         accessor: 'item_number' as const,
-        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'number'),
+        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_number'),
+        show: !hiddenColumns.find((col) => col.value === 'item_number'),
       },
       {
         Header: 'Name',
         accessor: 'item_string' as const,
-        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'string'),
+        disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_string'),
+        show: !hiddenColumns.find((col) => col.value === 'item_string'),
       },
     ],
-    [sortBy]
+    [hiddenColumns, sortBy]
   );
+
+  const initialState = {
+    hiddenColumns: columns.filter((column) => !column.show).map((column) => column.accessor),
+  };
 
   const {
     headerGroups,
     rows,
     state,
     visibleColumns,
-    allColumns,
     page,
     canNextPage,
     canPreviousPage,
@@ -110,14 +115,11 @@ export const Table = () => {
     getTableProps,
     getTableBodyProps,
     prepareRow,
-    getToggleHideAllColumnsProps,
   } = useTable(
     {
       columns: columns as Array<Column<ITableRow>>,
       data,
-      initialState: {
-        // hiddenColumns: ['item_date']
-      },
+      initialState,
     },
     useGlobalFilter,
     useSortBy,
@@ -127,21 +129,10 @@ export const Table = () => {
 
   const { globalFilter, pageIndex, pageSize } = state;
 
-  const pageSizeSelectVal = optionsPageSize.find((obj) => obj.value === pageSize);
-  console.log(allColumns);
+  const pageSizeSelectVal = pageSizeOptions.find((obj) => obj.value === pageSize);
 
   return (
     <div className="container">
-      <div>
-        {allColumns.map((column) => (
-          <div key={column.id}>
-            <label>
-              <input type="checkbox" onClick={() => column.} />
-              {column.Header}
-            </label>
-          </div>
-        ))}
-      </div>
       {!users.length ? (
         (isLoading && <div className="table__loading">Loading, plase wait!</div>) ||
         (serverError && <div className="table__loading">{serverError}</div>)
@@ -151,21 +142,26 @@ export const Table = () => {
             <InputSelect
               onChangeSingle={(e) => setPageSize(e.value as number)}
               isMulti={false}
-              name="pageSizeSelect"
+              name="pageSize"
               label="Показывать страниц: "
-              options={optionsPageSize}
+              options={pageSizeOptions}
               value={pageSizeSelectVal}
             />
-            <div className="table__header__group">
-              <InputSelect
-                onChangeMulti={setSortBy}
-                isMulti={true}
-                name="sortByColumnsSelect"
-                label="Сортировать по: "
-                options={optionsMulti}
-              />
-              <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
-            </div>
+            <InputSelect
+              onChangeMulti={setHiddenColumns}
+              isMulti={true}
+              name="hideColumns"
+              label="Скрыть колонки: "
+              options={tableColumns}
+            />
+            <InputSelect
+              onChangeMulti={setSortBy}
+              isMulti={true}
+              name="sortColumns"
+              label="Сортировать по: "
+              options={sortColumnsOptions}
+            />
+            <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
           </div>
           <TableBlock
             getTableProps={getTableProps}
@@ -184,6 +180,7 @@ export const Table = () => {
             pageOptions={pageOptions}
             gotoPage={gotoPage}
             pageCount={pageCount}
+            headerGroups={headerGroups}
             rows={rows}
           />
         </>
