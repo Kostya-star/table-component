@@ -27,6 +27,8 @@ export const TableBlock: FC<ITableBlockProps> = ({
         {headerGroups.map((headerGroup, ind) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
             {headerGroup.headers.map((column, ind) => {
+              // console.log(column.render('Header'));
+              
               return (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
                   {column.render('Header')}
@@ -35,6 +37,11 @@ export const TableBlock: FC<ITableBlockProps> = ({
                       {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
                     </span>
                   )}
+                  {
+                    headerGroup.headers[ind].tipText && (
+                      <span>{headerGroup.headers[ind].tipText}</span>
+                  )
+                  } 
                 </th>
               );
             })}
@@ -48,6 +55,8 @@ export const TableBlock: FC<ITableBlockProps> = ({
             <Fragment {...row.getRowProps} key={ind}>
               <tr>
                 {row.cells.map((cell, ind) => {
+                  // console.log(row.original);
+                  
                   return (
                     <td {...cell.getCellProps()} key={ind}>
                       {cell.render('Cell')}

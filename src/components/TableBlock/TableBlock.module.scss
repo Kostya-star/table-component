@@ -5,6 +5,33 @@
   margin-top: 20px;
   margin-bottom: 20px;
 
+  thead {
+    tr {
+      th {
+        span {
+          display: none;
+          width: 120px;
+          background-color: black;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 80%;
+          left: 50%;
+          margin-left: -60px;
+          cursor: pointer;
+
+          &:hover {
+            display: flex;
+            border: 1px solid red;
+          }
+        }
+      }
+    }
+  }
+
   &__header__emoji {
     font-size: 25px;
   }

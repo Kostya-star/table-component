@@ -69,6 +69,8 @@ export const Table = () => {
           <span {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</span>
         ),
         show: !hiddenColumns.find((col) => col.value === 'item_extend'),
+        // tipText: <span>{rows.values.name}</span>
+        tipText: "Text for the Last Name tooltip"
       },
       {
         // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
@@ -76,27 +78,34 @@ export const Table = () => {
         accessor: 'item_date' as const,
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_date'),
         show: !hiddenColumns.find((col) => col.value === 'item_date'),
+        // tipText: <span>{rows.values.name}</span>
+        tipText: "Text for the Last Name tooltip"
       },
       {
         Header: 'Number in table',
         accessor: 'item_number' as const,
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_number'),
         show: !hiddenColumns.find((col) => col.value === 'item_number'),
+        // tipText: <span>{rows.values.name}</span>
+        tipText: "Text for the Last Name tooltip"
       },
       {
         Header: 'Name',
         accessor: 'item_string' as const,
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_string'),
         show: !hiddenColumns.find((col) => col.value === 'item_string'),
+        // tipText: <span>{rows.values.name}</span>
+        tipText: "Text for the Last Name tooltip"
       },
     ],
     [hiddenColumns, sortBy]
   );
-
+  
+  
   const initialState = {
     hiddenColumns: columns.filter((column) => !column.show).map((column) => column.accessor),
   };
-
+  
   const {
     headerGroups,
     rows,
@@ -125,9 +134,11 @@ export const Table = () => {
     useSortBy,
     useExpanded,
     usePagination
-  );
+    );
 
-  const { globalFilter, pageIndex, pageSize } = state;
+    // console.log(rows.values.name);
+    
+    const { globalFilter, pageIndex, pageSize } = state;
 
   const pageSizeSelectVal = pageSizeOptions.find((obj) => obj.value === pageSize);
 
