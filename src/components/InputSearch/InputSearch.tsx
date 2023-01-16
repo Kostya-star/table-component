@@ -22,7 +22,7 @@ export const InputSearch: FC<InputFilterProps> = ({ filter, setFilter }) => {
   return (
     <div className={s.container}>
       <span>
-        <input value={value || ''} onChange={(e) => onChangeHandle(e.target.value)} placeholder="Поиск" />
+        <input value={value || ''} onChange={(e) => onChangeHandle(e.target.value)} placeholder="Search" />
         {
           value && <span onClick={() => onChangeHandle('')}>❌</span>
         }
