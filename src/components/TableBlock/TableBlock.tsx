@@ -28,7 +28,7 @@ export const TableBlock: FC<ITableBlockProps> = ({
           <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
             {headerGroup.headers.map((column, ind) => {
               return (
-                <th {...column.getHeaderProps(column.getSortByToggleProps({ title: undefined }))} key={ind}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}  title='' key={ind}>
                   <p>
                   {column.render('Header')}
                   {column.id === 'item_extend' ? null : (

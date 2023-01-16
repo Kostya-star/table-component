@@ -1,10 +1,9 @@
 import { baseUrl } from 'api/baseUrl';
-import { columnsTable } from 'components/columnsTable';
 import { InputSearch } from 'components/InputSearch/InputSearch';
 import { InputSelect } from 'components/InputSelect/InputSelect';
 import { Pagination } from 'components/Pagination/Pagination';
 import { TableBlock } from 'components/TableBlock/TableBlock';
-import { pageSizeOptions, sortColumnsOptions, tableColumns } from 'helpers';
+import { columnsTable, pageSizeOptions, sortColumnsOptions, tableColumns } from 'helpers';
 import { useEffect, useMemo, useState } from 'react';
 import {
   Column,
@@ -16,7 +15,6 @@ import {
 } from 'react-table';
 import 'scss/all.scss';
 import { ISelectOption, ITableRow } from 'types';
-
 
 export const Table = () => {
   const [users, setUsers] = useState([]);
