@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import { ISelectOption } from 'types';
 import s from './InputSelect.module.scss';
@@ -8,7 +8,6 @@ interface InputSelectProps {
   name: string;
   label: string;
   options: ISelectOption[];
-  // pageSizeDefaultVal?: ISelectOption;
   value?: ISelectOption;
   onChangeSingle?: (val: ISelectOption) => void;
   onChangeMulti?: (val: ISelectOption[]) => void;
@@ -73,8 +72,6 @@ export const InputSelect: FC<InputSelectProps> = ({
     valueContainer: (baseStyles, state) => ({
       ...baseStyles,
       flexWrap: 'nowrap',
-      // textOverflow: "-",
-      // display: `${state.hasValue ? 'initial' : 'flex'}`,
     }),
     multiValue: (baseStyles) => ({
       ...baseStyles,

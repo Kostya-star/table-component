@@ -27,17 +27,17 @@ export const TableBlock: FC<ITableBlockProps> = ({
         {headerGroups.map((headerGroup, ind) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
             {headerGroup.headers.map((column, ind) => {
-              // console.log(column.render('Header'));
-              
               return (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())} key={ind}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps({ title: undefined }))} key={ind}>
+                  <p>
                   {column.render('Header')}
                   {column.id === 'item_extend' ? null : (
                     <span className={s.table__header__emoji}>
                       {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
                     </span>
                   )}
-                    <span>{headerGroup.headers[ind].tipText}</span>
+                  <span>{column.render('Header')}</span>
+                  </p>
                 </th>
               );
             })}
@@ -49,13 +49,14 @@ export const TableBlock: FC<ITableBlockProps> = ({
           prepareRow(row);
           return (
             <Fragment {...row.getRowProps} key={ind}>
-              <tr>
+              <tr style={{border: '1px solid red'}}>
                 {row.cells.map((cell, ind) => {
-                  // console.log(row.original);
-                  
                   return (
                     <td {...cell.getCellProps()} key={ind}>
-                      {cell.render('Cell')}
+                      <p>
+                        {cell.render('Cell')}
+                        <span>{cell.render('Cell')}</span>
+                      </p>
                     </td>
                   );
                 })}
