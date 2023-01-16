@@ -22,56 +22,58 @@ export const TableBlock: FC<ITableBlockProps> = ({
   prepareRow,
 }) => {
   return (
-    <table {...getTableProps} className={s.table}>
-      <thead>
-        {headerGroups.map((headerGroup, ind) => (
-          <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
-            {headerGroup.headers.map((column, ind) => {
-              return (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}  title='' key={ind}>
-                  <p>
-                  {column.render('Header')}
-                  {column.id === 'item_extend' ? null : (
-                    <span className={s.table__header__emoji}>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
-                    </span>
-                  )}
-                  <span>{column.render('Header')}</span>
-                  </p>
-                </th>
-              );
-            })}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps}>
-        {page.map((row, ind) => {
-          prepareRow(row);
-          return (
-            <Fragment {...row.getRowProps} key={ind}>
-              <tr style={{border: '1px solid red'}}>
-                {row.cells.map((cell, ind) => {
-                  return (
-                    <td {...cell.getCellProps()} key={ind}>
-                      <p>
-                        {cell.render('Cell')}
-                        <span>{cell.render('Cell')}</span>
-                      </p>
-                    </td>
-                  );
-                })}
-              </tr>
-              {row.isExpanded ? (
-                <tr>
-                  <td colSpan={visibleColumns.length} style={{ backgroundColor: '#ddd' }}>
-                    <TableRowDetails rowData={row} />
-                  </td>
+    <div className={s.table}>
+      <table {...getTableProps} >
+        <thead>
+          {headerGroups.map((headerGroup, ind) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={ind}>
+              {headerGroup.headers.map((column, ind) => {
+                return (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} title="" key={ind}>
+                    <p>
+                      {column.render('Header')}
+                      {column.id === 'item_extend' ? null : (
+                        <span className={s.table__header__emoji}>
+                          {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
+                        </span>
+                      )}
+                      <span>{column.render('Header')}</span>
+                    </p>
+                  </th>
+                );
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps}>
+          {page.map((row, ind) => {
+            prepareRow(row);
+            return (
+              <Fragment {...row.getRowProps} key={ind}>
+                <tr style={{ border: '1px solid red' }}>
+                  {row.cells.map((cell, ind) => {
+                    return (
+                      <td {...cell.getCellProps()} key={ind}>
+                        <p>
+                          {cell.render('Cell')}
+                          <span>{cell.render('Cell')}</span>
+                        </p>
+                      </td>
+                    );
+                  })}
                 </tr>
-              ) : null}
-            </Fragment>
-          );
-        })}
-      </tbody>
-    </table>
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns.length} style={{ backgroundColor: '#ddd' }}>
+                      <TableRowDetails rowData={row} />
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };

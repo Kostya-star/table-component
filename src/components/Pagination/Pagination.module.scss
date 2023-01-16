@@ -2,8 +2,9 @@
   display: flex;
   justify-content: end;
   align-items: center;
-  span {
+  div {
     font-size: 20px;
+    margin-right: 50px;
     input {
       appearance: none;
       width: 50px;
@@ -16,6 +17,7 @@
     background-color: transparent;
     cursor: pointer;
     font-size: 30px;
+    margin-right: 10px;
   }
   &_hidden {
     display: none;

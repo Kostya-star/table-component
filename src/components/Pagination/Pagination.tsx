@@ -37,13 +37,13 @@ export const Pagination: FC<IPaginationProps> = ({
     <div
       className={`${s.pagination} ${(!rows.length || !headerGroups.length) && s.pagination_hidden}`}
     >
-      <span>
+      <div>
         Page{' '}
         <strong>
           <input type="number" value={pageIndex + 1} onChange={onChangePageHandler} /> of{' '}
           {pageOptions.length}
         </strong>
-      </span>
+      </div>
       <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
         ⏪
       </button>

@@ -14,15 +14,18 @@ export const InputSearch: FC<InputFilterProps> = ({ filter, setFilter }) => {
       setFilter(value || '');
   }, 1000);
 
-  const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    onChange(e.target.value);
+  const onChangeHandle = (val: string) => {
+    setValue(val);
+    onChange(val);
   };
 
   return (
     <div className={s.container}>
       <span>
-        <input value={value || ''} onChange={onChangeHandle} placeholder="Поиск" />
+        <input value={value || ''} onChange={(e) => onChangeHandle(e.target.value)} placeholder="Поиск" />
+        {
+          value && <span onClick={() => onChangeHandle('')}>❌</span>
+        }
       </span>
     </div>
   );

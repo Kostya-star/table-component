@@ -1,8 +1,15 @@
 .container {
-  input {
-    appearance: none;
-    outline: none;
-    border: none;
-    border-bottom: 2px solid black;
+  span {
+    position: relative;
+    input {
+      appearance: none;
+      outline: none;
+      border: none;
+      border-bottom: 2px solid black;
+    }
+    span {
+      position: absolute;
+      cursor: pointer;
+    }
   }
 }

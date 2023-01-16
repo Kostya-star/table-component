@@ -1,152 +1,157 @@
 .table {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 173px);
   margin-bottom: 20px;
-
-  thead {
-    tr {
-      th {
-        &:first-child {
-          p {
-            display: none;
-          }
-        }
-
-        p {
-          position: relative;
-          margin: 0 auto;
-          width: max-content;
-
-          span {
-            &:last-child {
-              visibility: hidden;
-              position: absolute;
-              font-size: 13px;
-              width: max-content;
-              left: calc(100% + 20px);
-              background-color: rgb(48, 186, 48);
-              border-radius: 3px 10px 10px 2px;
-              padding: 5px;
-
-              &:before {
-                content: "";
-                position: absolute;
-                top: 2px;
-                right: 100%;
-                border-width: 11px;
-                border-style: solid;
-                border-color: transparent rgb(48, 186, 48) transparent transparent;
-              }
+  margin-top: 20px;
+  table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    
+    thead {
+      tr {
+        th {
+          &:first-child {
+            p {
+              display: none;
             }
           }
 
-          &:hover {
-            span {
-              &:last-child {
-                transition-property: visibility;
-                transition-delay: .5s;
-                visibility: visible;
-              }
-            }
-          }
-        }
-
-      }
-    }
-  }
-
-  tbody {
-    tr {
-      td {
-        &:first-child {
           p {
+            position: relative;
             margin: 0 auto;
+            width: max-content;
 
             span {
               &:last-child {
-                display: none;
-              }
-            }
-          }
-        }
-
-        p {
-          position: relative;
-          width: max-content;
-
-          span {
-            &:last-child {
-              visibility: hidden;
-              position: absolute;
-              font-size: 13px;
-              color: white;
-              left: calc(100% + 20px);
-              background-color: rgb(48, 186, 48);
-              border-radius: 3.5px 10px 10px 2px;
-              padding: 5px;
-
-              &:before {
-                content: "";
+                visibility: hidden;
                 position: absolute;
-                top: 2px;
-                right: 100%;
-                border-width: 11px;
-                border-style: solid;
-                border-color: transparent rgb(48, 186, 48) transparent transparent;
+                font-size: 13px;
+                width: max-content;
+                left: calc(100% + 20px);
+                background-color: rgb(48, 186, 48);
+                border-radius: 3px 10px 10px 2px;
+                padding: 5px;
+
+                &:before {
+                  content: "";
+                  position: absolute;
+                  top: 2px;
+                  right: 100%;
+                  border-width: 11px;
+                  border-style: solid;
+                  border-color: transparent rgb(48, 186, 48) transparent transparent;
+                }
               }
-
             }
-          }
 
-          &:hover {
-            span {
-              &:last-child {
-                visibility: visible;
-                transition-property: visibility;
-                transition-delay: .5s;
+            &:hover {
+              span {
+                &:last-child {
+                  transition-property: visibility;
+                  transition-delay: .5s;
+                  visibility: visible;
+                }
               }
             }
           }
 
         }
-
       }
     }
-  }
 
-  &__header__emoji {
-    font-size: 25px;
-  }
+    tbody {
+      tr {
+        td {
+          &:first-child {
+            p {
+              margin: 0 auto;
 
-  td {
-    border: 1px solid #ddd;
-    padding: 8px;
+              span {
+                &:last-child {
+                  display: none;
+                }
+              }
+            }
+          }
 
-    &:first-child {
+          p {
+            position: relative;
+            width: max-content;
+
+            span {
+              &:last-child {
+                visibility: hidden;
+                position: absolute;
+                font-size: 13px;
+                color: white;
+                left: calc(100% + 20px);
+                background-color: rgb(48, 186, 48);
+                border-radius: 3.5px 10px 10px 2px;
+                padding: 5px;
+
+                &:before {
+                  content: "";
+                  position: absolute;
+                  top: 2px;
+                  right: 100%;
+                  border-width: 11px;
+                  border-style: solid;
+                  border-color: transparent rgb(48, 186, 48) transparent transparent;
+                }
+
+              }
+            }
+
+            &:hover {
+              span {
+                &:last-child {
+                  visibility: visible;
+                  transition-property: visibility;
+                  transition-delay: .5s;
+                }
+              }
+            }
+
+          }
+
+        }
+      }
+    }
+
+    &__header__emoji {
+      font-size: 25px;
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+
+      &:first-child {
+        text-align: center;
+      }
+    }
+
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      padding-top: 12px;
+      padding-bottom: 12px;
       text-align: center;
-    }
-  }
+      background-color: black;
+      color: white;
 
-  th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
-    background-color: black;
-    color: white;
-
-  }
-
-  tr {
-    &:nth-child(even) {
-      background-color: #f2f2f2;
     }
 
-    &:hover {
-      background-color: #ddd;
+    tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      &:hover {
+        background-color: #ddd;
+      }
     }
+
   }
 }

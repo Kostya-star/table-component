@@ -33,11 +33,10 @@ export const Table = () => {
 
         if (response.ok) {
           setUsers(data);
-          setIsLoading(false);
         } else {
           setServerError('oopppss! Some error occured!');
-          setIsLoading(false);
         }
+        setIsLoading(false);
       });
     };
     void fetchData();
@@ -86,17 +85,16 @@ export const Table = () => {
 
   return (
     <div className="container">
-      {!users.length ? (
-        (isLoading && <div className="table__loading">Loading, plase wait!</div>) ||
-        (serverError && <div className="table__loading">{serverError}</div>)
-      ) : (
+      {isLoading ? <div className="table__loading">Loading, plase wait!</div> : null}
+      {serverError ? <div className="table__loading">{serverError}</div> : null}
+      {users?.length ? (
         <>
           <div className="table__header">
             <InputSelect
               onChangeSingle={(e) => setPageSize(e.value as number)}
               isMulti={false}
               name="pageSize"
-              label="Показывать страниц: "
+              label="Rows in table: "
               options={pageSizeOptions}
               value={pageSizeSelectVal}
             />
@@ -104,14 +102,14 @@ export const Table = () => {
               onChangeMulti={setHiddenColumns}
               isMulti={true}
               name="hideColumns"
-              label="Скрыть колонки: "
+              label="Hide columns: "
               options={tableColumns}
             />
             <InputSelect
               onChangeMulti={setSortBy}
               isMulti={true}
               name="sortColumns"
-              label="Сортировать по: "
+              label="Search by: "
               options={sortColumnsOptions}
             />
             <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
@@ -137,7 +135,7 @@ export const Table = () => {
             rows={rows}
           />
         </>
-      )}
+      ) : null}
     </div>
   );
 };
