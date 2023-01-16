@@ -70,7 +70,7 @@ export const Table = () => {
         ),
         show: !hiddenColumns.find((col) => col.value === 'item_extend'),
         // tipText: <span>{rows.values.name}</span>
-        tipText: "Text for the Last Name tooltip"
+        // tipText: "Text for the Last Name tooltip"
       },
       {
         // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
@@ -79,7 +79,7 @@ export const Table = () => {
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_date'),
         show: !hiddenColumns.find((col) => col.value === 'item_date'),
         // tipText: <span>{rows.values.name}</span>
-        tipText: "Text for the Last Name tooltip"
+        // tipText: "Text for the Last Name tooltip"
       },
       {
         Header: 'Number in table',
@@ -87,7 +87,7 @@ export const Table = () => {
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_number'),
         show: !hiddenColumns.find((col) => col.value === 'item_number'),
         // tipText: <span>{rows.values.name}</span>
-        tipText: "Text for the Last Name tooltip"
+        // tipText: "Text for the Last Name tooltip"
       },
       {
         Header: 'Name',
@@ -95,7 +95,7 @@ export const Table = () => {
         disableGlobalFilter: sortBy?.length && !sortBy?.find((val) => val.value === 'item_string'),
         show: !hiddenColumns.find((col) => col.value === 'item_string'),
         // tipText: <span>{rows.values.name}</span>
-        tipText: "Text for the Last Name tooltip"
+        // tipText: "Text for the Last Name tooltip"
       },
     ],
     [hiddenColumns, sortBy]

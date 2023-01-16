@@ -37,11 +37,7 @@ export const TableBlock: FC<ITableBlockProps> = ({
                       {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
                     </span>
                   )}
-                  {
-                    headerGroup.headers[ind].tipText && (
-                      <span>{headerGroup.headers[ind].tipText}</span>
-                  )
-                  } 
+                    <span>{headerGroup.headers[ind].tipText}</span>
                 </th>
               );
             })}
