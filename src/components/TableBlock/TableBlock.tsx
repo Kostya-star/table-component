@@ -8,7 +8,7 @@ interface ITableBlockProps {
   headerGroups: Array<HeaderGroup<ITableRow>>;
   page: Array<Row<ITableRow>>;
   visibleColumns: Array<ColumnInstance<ITableRow>>;
-  tableRef: MutableRefObject<null>
+  tableRef: MutableRefObject<null>;
   getTableProps: () => void;
   getTableBodyProps: () => void;
   prepareRow: (row: Row<ITableRow>) => void;
