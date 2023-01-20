@@ -1,0 +1,29 @@
+.downloadBtns {
+  display: flex;
+
+  button {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: DodgerBlue;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      transition: .4s;
+      background-color: RoyalBlue;
+    }
+
+    &:first-child {
+      margin-right: 20px;
+    }
+  }
+}

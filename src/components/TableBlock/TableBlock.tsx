@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react';
+import { FC, Fragment, MutableRefObject } from 'react';
 import { ColumnInstance, HeaderGroup, Row } from 'react-table';
 import { ITableRow } from 'types';
 import s from './TableBlock.module.scss';
@@ -8,6 +8,7 @@ interface ITableBlockProps {
   headerGroups: Array<HeaderGroup<ITableRow>>;
   page: Array<Row<ITableRow>>;
   visibleColumns: Array<ColumnInstance<ITableRow>>;
+  tableRef: MutableRefObject<null>
   getTableProps: () => void;
   getTableBodyProps: () => void;
   prepareRow: (row: Row<ITableRow>) => void;
@@ -17,13 +18,14 @@ export const TableBlock: FC<ITableBlockProps> = ({
   headerGroups,
   page,
   visibleColumns,
+  tableRef,
   getTableProps,
   getTableBodyProps,
   prepareRow,
 }) => {
   return (
     <div className={s.table}>
-      <table {...getTableProps} >
+      <table {...getTableProps} ref={tableRef}>
         <thead>
           {headerGroups.map((headerGroup, ind) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={ind}>

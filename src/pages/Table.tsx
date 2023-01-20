@@ -1,10 +1,14 @@
 import { baseUrl } from 'api/baseUrl';
+import { DownloadTableBtns } from 'components/DownloadTableBtns/DownloadTableBtns';
 import { InputSearch } from 'components/InputSearch/InputSearch';
 import { InputSelect } from 'components/InputSelect/InputSelect';
 import { Pagination } from 'components/Pagination/Pagination';
 import { TableBlock } from 'components/TableBlock/TableBlock';
 import { columnsTable, pageSizeOptions, sortColumnsOptions, tableColumns } from 'helpers';
-import { useEffect, useMemo, useState } from 'react';
+import JsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { downloadExcel } from 'react-export-table-to-excel';
 import {
   Column,
   useExpanded,
@@ -15,6 +19,36 @@ import {
 } from 'react-table';
 import 'scss/all.scss';
 import { ISelectOption, ITableRow } from 'types';
+
+const downloadPDF = (data: ITableRow[], columns: Array<Column<ITableRow>>) => {
+  const doc = new JsPDF('portrait', 'pt', 'A4');
+
+  // const head = [['Date of birth', 'Number in table', 'Name']];
+  const head = [columns.slice(1).map((col) => col.Header as string)];
+  const body = data.map((col) => [col.item_date, col.item_number, col.item_string]);
+
+  const content = {
+    startY: 50,
+    head,
+    body,
+  };
+
+  doc.setFontSize(15);
+  doc.text('Table', 40, 40);
+  doc.autoTable(content);
+  doc.save('report.pdf');
+};
+
+const downloadXLS = (data: ITableRow[], columns: Array<Column<ITableRow>>) => {
+  downloadExcel({
+    fileName: 'table',
+    sheet: 'table',
+    tablePayload: {
+      header: columns.slice(1).map((col) => col.Header as string),
+      body: data.map((col) => [col.item_date, col.item_number, col.item_string]),
+    },
+  });
+};
 
 export const Table = () => {
   const [users, setUsers] = useState([]);
@@ -42,7 +76,7 @@ export const Table = () => {
     void fetchData();
   }, []);
 
-  const data = useMemo(() => users, [users]);
+  const data: ITableRow[] = useMemo(() => users, [users]);
   const columns = useMemo(() => columnsTable(hiddenColumns, sortBy), [hiddenColumns, sortBy]);
 
   const initialState = {
@@ -83,6 +117,16 @@ export const Table = () => {
 
   const pageSizeSelectVal = pageSizeOptions.find((obj) => obj.value === pageSize);
 
+  const onTableDownloadPDFHandler = () => {
+    downloadPDF(data, columns as Array<Column<ITableRow>>);
+  };
+
+  const onTableDownloadExcelHandler = () => {
+    downloadXLS(data, columns as Array<Column<ITableRow>>);
+  };
+
+  const tableRef = useRef(null);
+
   return (
     <div className="container">
       {isLoading ? <div className="table__loading">Loading, plase wait!</div> : null}
@@ -121,19 +165,26 @@ export const Table = () => {
             page={page}
             prepareRow={prepareRow}
             visibleColumns={visibleColumns}
+            tableRef={tableRef}
           />
-          <Pagination
-            goBack={previousPage}
-            goNext={nextPage}
-            canPreviousPage={canPreviousPage}
-            canNextPage={canNextPage}
-            pageIndex={pageIndex}
-            pageOptions={pageOptions}
-            gotoPage={gotoPage}
-            pageCount={pageCount}
-            headerGroups={headerGroups}
-            rows={rows}
-          />
+          <div className="table__footer">
+            <DownloadTableBtns
+              onTableDownloadExcelHandler={onTableDownloadExcelHandler}
+              onTableDownloadPDFHandler={onTableDownloadPDFHandler}
+            />
+            <Pagination
+              goBack={previousPage}
+              goNext={nextPage}
+              canPreviousPage={canPreviousPage}
+              canNextPage={canNextPage}
+              pageIndex={pageIndex}
+              pageOptions={pageOptions}
+              gotoPage={gotoPage}
+              pageCount={pageCount}
+              headerGroups={headerGroups}
+              rows={rows}
+            />
+          </div>
         </>
       ) : null}
     </div>

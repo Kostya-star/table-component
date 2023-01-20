@@ -28,4 +28,10 @@
     font-size: 30px;
     font-weight: 600;
   }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
