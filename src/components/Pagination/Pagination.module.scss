@@ -26,3 +26,23 @@
     display: none;
   }
 }
+
+// MEDIA 
+@media screen and (max-width: 1024px) {
+  .pagination {
+    display: block;
+    text-align: center;
+    div {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .pagination {
+    div {
+      font-size: 15px;
+    }
+  }
+}

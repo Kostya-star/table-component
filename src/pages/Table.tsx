@@ -134,29 +134,33 @@ export const Table = () => {
       {users?.length ? (
         <>
           <div className="table__header">
-            <InputSelect
-              onChangeSingle={(e) => setPageSize(e.value as number)}
-              isMulti={false}
-              name="pageSize"
-              label="Rows in table: "
-              options={pageSizeOptions}
-              value={pageSizeSelectVal}
-            />
-            <InputSelect
-              onChangeMulti={setHiddenColumns}
-              isMulti={true}
-              name="hideColumns"
-              label="Hide columns: "
-              options={tableColumns}
-            />
-            <InputSelect
-              onChangeMulti={setSortBy}
-              isMulti={true}
-              name="sortColumns"
-              label="Search by: "
-              options={sortColumnsOptions}
-            />
-            <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
+            <div className="table__header-group">
+              <InputSelect
+                onChangeSingle={(e) => setPageSize(e.value as number)}
+                isMulti={false}
+                name="pageSize"
+                label="Rows in table: "
+                options={pageSizeOptions}
+                value={pageSizeSelectVal}
+              />
+              <InputSelect
+                onChangeMulti={setHiddenColumns}
+                isMulti={true}
+                name="hideColumns"
+                label="Hide columns: "
+                options={tableColumns}
+              />
+            </div>
+            <div className="table__header-group">
+              <InputSelect
+                onChangeMulti={setSortBy}
+                isMulti={true}
+                name="sortColumns"
+                label="Search by: "
+                options={sortColumnsOptions}
+              />
+              <InputSearch filter={globalFilter} setFilter={setGlobalFilter} />
+            </div>
           </div>
           <TableBlock
             getTableProps={getTableProps}
@@ -168,22 +172,26 @@ export const Table = () => {
             tableRef={tableRef}
           />
           <div className="table__footer">
-            <DownloadTableBtns
-              onTableDownloadExcelHandler={onTableDownloadExcelHandler}
-              onTableDownloadPDFHandler={onTableDownloadPDFHandler}
-            />
-            <Pagination
-              goBack={previousPage}
-              goNext={nextPage}
-              canPreviousPage={canPreviousPage}
-              canNextPage={canNextPage}
-              pageIndex={pageIndex}
-              pageOptions={pageOptions}
-              gotoPage={gotoPage}
-              pageCount={pageCount}
-              headerGroups={headerGroups}
-              rows={rows}
-            />
+            <div className="table__footer-group">
+              <DownloadTableBtns
+                onTableDownloadExcelHandler={onTableDownloadExcelHandler}
+                onTableDownloadPDFHandler={onTableDownloadPDFHandler}
+              />
+            </div>
+            <div className="table__footer-group">
+              <Pagination
+                goBack={previousPage}
+                goNext={nextPage}
+                canPreviousPage={canPreviousPage}
+                canNextPage={canNextPage}
+                pageIndex={pageIndex}
+                pageOptions={pageOptions}
+                gotoPage={gotoPage}
+                pageCount={pageCount}
+                headerGroups={headerGroups}
+                rows={rows}
+              />
+            </div>
           </div>
         </>
       ) : null}

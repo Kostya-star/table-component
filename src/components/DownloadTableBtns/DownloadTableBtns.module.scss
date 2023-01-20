@@ -27,3 +27,22 @@
     }
   }
 }
+
+// MEDIA
+
+@media screen and (max-width: 1024px) {
+  .downloadBtns {
+    display: block;
+    button {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .downloadBtns {
+    button {
+      font-size: 13px;
+    }
+  }
+}

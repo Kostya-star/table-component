@@ -1,9 +1,21 @@
 .select {
   width: 200px;
-  margin-right: 50px;
+  // margin-right: 50px;
   label {
     display: block;
     font-weight: 600;
     margin-bottom: 5px;
+  }
+}
+
+// MEDIA
+@media screen and (max-width: 1024px) {
+  .select {
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 550px) {
+  .select {
+    margin-bottom: 10px;
   }
 }
