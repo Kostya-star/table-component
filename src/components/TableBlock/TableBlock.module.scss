@@ -164,7 +164,7 @@
 @media screen and (max-width: 1024px) {
   .table {
     overflow-y: auto;
-    max-height: calc(100vh - 353px);
+    max-height: calc(100vh - 400px);
     margin-bottom: 20px;
     margin-top: 20px;
   }
@@ -172,8 +172,6 @@
 
 @media screen and (max-width: 550px) {
   .table {
-    max-height: calc(100vh - 353px);
-    margin-bottom: 20px;
     margin-top: 10px;
     table {
       font-size: 13px;

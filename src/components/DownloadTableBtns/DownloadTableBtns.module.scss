@@ -41,6 +41,7 @@
 
 @media screen and (max-width: 550px) {
   .downloadBtns {
+    display: flex;
     button {
       font-size: 13px;
     }
