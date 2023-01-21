@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 import { ColumnInstance, Row } from 'react-table';
 import { ITableRow } from 'types';
-import { TableRowDetails } from '../TableRowDetails/TableRowDetails';
+import { TableRowDetails } from './TableRowDetails/TableRowDetails';
 import './TableBody.module.scss';
 
 interface ITableBodyProps {
