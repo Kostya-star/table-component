@@ -22,7 +22,7 @@ const downloadPDF = (data: ITableRow[], columns: Array<Column<ITableRow>>) => {
   doc.setFontSize(15);
   doc.text('Table', 40, 40);
   autoTable(doc, content);
-  doc.save('report.pdf');
+  doc.save('table.pdf');
 };
 
 const downloadXLS = (data: ITableRow[], columns: Array<Column<ITableRow>>) => {
