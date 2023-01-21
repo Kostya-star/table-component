@@ -2,6 +2,10 @@ import { ChangeEvent, FC } from 'react';
 import { HeaderGroup, Row } from 'react-table';
 import { ITableRow } from 'types';
 import s from './Pagination.module.scss';
+import { ReactComponent as GoBack } from 'assets/goback.svg';
+import { ReactComponent as GoStart } from 'assets/gostart.svg';
+import { ReactComponent as GoNext } from 'assets/gonext.svg';
+import { ReactComponent as GoEnd } from 'assets/goend.svg';
 
 interface IPaginationProps {
   canPreviousPage: boolean;
@@ -28,11 +32,6 @@ export const Pagination: FC<IPaginationProps> = ({
   goBack,
   goNext,
 }) => {
-  const onChangePageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0;
-    gotoPage(pageNumber);
-  };
-
   return (
     <div
       className={`${s.pagination} ${(!rows.length || !headerGroups.length) && s.pagination_hidden}`}
@@ -40,21 +39,20 @@ export const Pagination: FC<IPaginationProps> = ({
       <div>
         Page{' '}
         <strong>
-          <input type="number" value={pageIndex + 1} onChange={onChangePageHandler} /> of{' '}
-          {pageOptions.length}
+          {pageIndex + 1} of {pageOptions.length}
         </strong>
       </div>
       <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-        ⏪
+        <GoStart />
       </button>
       <button onClick={() => goBack()} disabled={!canPreviousPage}>
-        ◀️
+        <GoBack />
       </button>
       <button onClick={() => goNext()} disabled={!canNextPage}>
-        ▶️
+        <GoNext />
       </button>
       <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-        ⏩
+        <GoEnd />
       </button>
     </div>
   );

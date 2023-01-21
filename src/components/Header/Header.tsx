@@ -1,7 +1,7 @@
 import { InputSearch } from 'components/InputSearch/InputSearch';
 import { InputSelect } from 'components/InputSelect/InputSelect';
 import { pageSizeOptions, sortColumnsOptions, tableColumns } from 'helpers';
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { ISelectOption } from 'types';
 import s from './Header.module.scss';
 

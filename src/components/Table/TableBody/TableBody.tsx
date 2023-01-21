@@ -29,7 +29,11 @@ export const TableBody: FC<ITableBodyProps> = ({
                   <td {...cell.getCellProps()} key={ind}>
                     <p>
                       {cell.render('Cell')}
-                      <span>{cell.render('Cell')}</span>
+                      {cell.column.id === 'item_extend' ? (
+                        <i {...row.getToggleRowExpandedProps()}>{row.isExpanded ? '👇' : '👉'}</i>
+                      ) : null}
+                      
+                      {cell.column.id !== 'item_extend' ? <span>{cell.render('Cell')}</span> : null}
                     </p>
                   </td>
                 );

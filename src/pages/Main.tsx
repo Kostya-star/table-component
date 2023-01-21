@@ -22,6 +22,7 @@ export const Main = () => {
   const [sortBy, setSortBy] = useState<ISelectOption[]>();
   const [hiddenColumns, setHiddenColumns] = useState<ISelectOption[]>([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -95,12 +96,12 @@ export const Main = () => {
             setGlobalFilter={setGlobalFilter}
           />
           <Table
-            getTableProps={getTableProps}
             headerGroups={headerGroups}
-            getTableBodyProps={getTableBodyProps}
             page={page}
-            prepareRow={prepareRow}
             visibleColumns={visibleColumns}
+            getTableBodyProps={getTableBodyProps}
+            getTableProps={getTableProps}
+            prepareRow={prepareRow}
           />
           <Footer
             pageCount={pageCount}

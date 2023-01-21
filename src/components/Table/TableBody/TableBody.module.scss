@@ -5,18 +5,8 @@ tbody {
       padding: 8px;
 
       &:first-child {
-        text-align: center;
-      }
-
-      &:first-child {
         p {
           margin: 0 auto;
-
-          span {
-            &:last-child {
-              display: none;
-            }
-          }
         }
       }
 
@@ -45,7 +35,7 @@ tbody {
               border-style: solid;
               border-color: transparent rgb(48, 186, 48) transparent transparent;
             }
-
+            
           }
         }
 

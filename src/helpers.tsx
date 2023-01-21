@@ -18,6 +18,7 @@ export const pageSizeOptions = [
 // COLUMNS IN TABLE
 
 const checkIsShow = (hiddenColumns: ISelectOption[], currentValueL: string) => {
+
   return !hiddenColumns.find(({ value }) => value === currentValueL);
 };
 
@@ -25,9 +26,9 @@ export const columnsTable = (hiddenColumns: ISelectOption[], sortBy?: ISelectOpt
   {
     accessor: 'item_extend' as const,
     // Cell: (rows: Row<UseExpandedRowProps<ITableRow>>) => {
-    Cell: ({ row }: any) => (
-      <span {...row.getToggleRowExpandedProps()}> {row.isExpanded ? '👇' : '👉'} </span>
-    ),
+    //   Cell: ({ row }: any) => (
+    //   <span {...row.getToggleRowExpandedProps()}> {row.isExpanded ? '👇' : '👉'} </span>
+    // ),
     show: checkIsShow(hiddenColumns, 'item_extend'),
   },
   {

@@ -9,12 +9,6 @@
         background-color: black;
         color: white;
 
-        &:first-child {
-          p {
-            display: none;
-          }
-        }
-
         p {
           position: relative;
           margin: 0 auto;
@@ -40,6 +34,10 @@
                 border-width: 11px;
                 border-style: solid;
                 border-color: transparent rgb(48, 186, 48) transparent transparent;
+              }
+
+              &:first-child {
+                display: none;
               }
             }
           }

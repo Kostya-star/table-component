@@ -2,9 +2,11 @@
   display: flex;
   justify-content: end;
   align-items: center;
+
   div {
     font-size: 20px;
     margin-right: 50px;
+
     input {
       appearance: none;
       width: 50px;
@@ -18,10 +20,36 @@
     cursor: pointer;
     font-size: 30px;
     margin-right: 10px;
+
     &:last-child {
       margin-right: 0;
     }
+
+    &:nth-child(2) {
+      svg {
+        width: 27px;
+      }
+    }
+
+    &:nth-child(3) {
+      svg {
+        width: 20px;
+      }
+    }
+
+    &:nth-child(4) {
+      svg {
+        width: 20px;
+      }
+    }
+
+    &:nth-child(5) {
+      svg {
+        width: 27px;
+      }
+    }
   }
+
   &_hidden {
     display: none;
   }
@@ -32,6 +60,7 @@
   .pagination {
     display: block;
     text-align: center;
+
     div {
       margin-right: 0;
       margin-bottom: 20px;
@@ -44,11 +73,13 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+
     div {
       font-size: 15px;
       margin-bottom: 0;
       margin-right: 20px;
     }
+
     button {
       font-size: 25px;
     }

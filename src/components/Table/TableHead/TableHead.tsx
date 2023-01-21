@@ -17,11 +17,11 @@ export const TableHead: FC<ITableHeadProps> = ({ headerGroups }) => {
               <th {...column.getHeaderProps(column.getSortByToggleProps())} title="" key={ind}>
                 <p>
                   {column.render('Header')}
-                  {column.id === 'item_extend' ? null : (
+                  {column.id === 'item_extend' ? null : ( 
                     <span className={s.header__emoji}>
                       {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' 🔃'}
                     </span>
-                  )}
+                  )} 
                   <span>{column.render('Header')}</span>
                 </p>
               </th>
