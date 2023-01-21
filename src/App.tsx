@@ -1,5 +1,5 @@
-import { Table } from 'pages/Table';
+import { Main } from 'pages/Main';
 
-const App = () => <Table />;
+const App = () => <Main />;
 
 export default App;

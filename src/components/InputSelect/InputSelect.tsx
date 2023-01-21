@@ -4,7 +4,7 @@ import { ISelectOption } from 'types';
 import s from './InputSelect.module.scss';
 
 interface InputSelectProps {
-  isMulti: boolean;
+  isMulti?: boolean;
   name: string;
   label: string;
   options: ISelectOption[];
@@ -14,7 +14,7 @@ interface InputSelectProps {
 }
 
 export const InputSelect: FC<InputSelectProps> = ({
-  isMulti,
+  isMulti = false,
   name,
   label,
   options,

@@ -1,0 +1,66 @@
+tbody {
+  tr {
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+
+      &:first-child {
+        text-align: center;
+      }
+
+      &:first-child {
+        p {
+          margin: 0 auto;
+
+          span {
+            &:last-child {
+              display: none;
+            }
+          }
+        }
+      }
+
+      p {
+        position: relative;
+        width: max-content;
+
+        span {
+          &:last-child {
+            visibility: hidden;
+            position: absolute;
+            font-size: 13px;
+            color: white;
+            left: calc(100% + 20px);
+            background-color: rgb(48, 186, 48);
+            border-radius: 3.5px 10px 10px 2px;
+            padding: 5px;
+            z-index: 10;
+
+            &:before {
+              content: "";
+              position: absolute;
+              top: 2px;
+              right: 100%;
+              border-width: 11px;
+              border-style: solid;
+              border-color: transparent rgb(48, 186, 48) transparent transparent;
+            }
+
+          }
+        }
+
+        &:hover {
+          span {
+            &:last-child {
+              visibility: visible;
+              transition-property: visibility;
+              transition-delay: .5s;
+            }
+          }
+        }
+
+      }
+
+    }
+  }
+}

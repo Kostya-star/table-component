@@ -1,0 +1,29 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_group {
+    display: flex;
+  }
+}
+
+// MEDIA
+
+@media screen and (max-width: 1024px) {
+  .footer {
+    &_group {
+      flex-direction: column;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .footer {
+    flex-direction: column-reverse;
+
+    &_group {
+      margin-bottom: 10px;
+    }
+  }
+}
